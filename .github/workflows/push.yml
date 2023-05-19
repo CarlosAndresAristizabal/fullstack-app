@@ -13,13 +13,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
          node-version: 18.x
-         check-latest: true
-         #cache: npm
-          #cache-dependency-path: /home/ubuntu/docker/_work/fullstack-app/fullstack-app/package-lock.json
+         check-latest: true        
       - run: npm init -y  
-      - run: sudo npm install -y
-      #- run: sudo npm start 
-      #- run: npm run build
+      - run: sudo npm install -y     
       - name: Cache node modules
         uses: actions/cache@v3
         env:
@@ -40,13 +36,8 @@ jobs:
   test:
     needs: build
     runs-on: self-hosted
-    steps:           
-      - name: Download build for testing
-        uses: actions/download-artifact@v3
-        with:
-          name: built-project
-      - run: sudo npm install -y
-      - run: sudo npm run pipeline-test
+    steps:
+      - run: npm run pipeline-test
   run-name:
     needs: [build, test]
     name: deploy to docker
