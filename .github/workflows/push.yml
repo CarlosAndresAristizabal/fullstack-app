@@ -14,9 +14,9 @@ jobs:
         with:
          node-version: 18.x
          check-latest: true
-         cache: npm
+         #cache: npm
           #cache-dependency-path: /home/ubuntu/docker/_work/fullstack-app/fullstack-app/package-lock.json
-      - run : npm init -y
+      - run: npm init -y
       - run: npm ci
       - run: npm test
       - run: sudo npm install -y
