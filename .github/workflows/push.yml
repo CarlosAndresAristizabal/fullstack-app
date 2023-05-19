@@ -1,16 +1,20 @@
+name: build docker
 on: 
   push:
-    branches:  [ "master" ]
-name: deploy
+    branches: 
+      - master
+      
 jobs:
-  build:
+   build:
     name: deploy to docker
     runs-on: self-hosted
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - name: build and push to docker
       uses: docker/build-push-action@v1
+       
       with:
+          run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           tag_with-ref: true
