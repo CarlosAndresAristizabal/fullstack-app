@@ -18,38 +18,32 @@ jobs:
       - run: sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
       - run: sudo chmod +x /usr/local/bin/docker-compose
       - run: docker-compose --version
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Set up QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
-      -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      -
-        name: Login to Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      -
-        name: Build and push
+      - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
           tags: user/app:latest
       - uses: actions/checkout@master
-      - uses: docker/build-push-action@v2
+     # - uses: docker/build-push-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           tag_with-ref: true
           tag_with_sha: true
           tags: ${{ github.sha }}
-      - run: sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-          
+      - run: sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin  
       - run: docker-compose up -d
       - run: docker-compose ps
       - name: Cache node modules
@@ -69,16 +63,16 @@ jobs:
           name: built-project
           path: build
           retention-days: 1
-  run-name:
-    needs: build
-    name: deploy to docker
-    runs-on: self-hosted
-    steps:     
-      - uses: actions/checkout@master
-      - uses: docker/build-push-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          tag_with-ref: true
-          tag_with_sha: true
-          tags: ${{ github.sha }}
+#   run-name:
+#     needs: build
+#     name: deploy to docker
+#     runs-on: self-hosted
+#     steps:     
+#       - uses: actions/checkout@master
+#       - uses: docker/build-push-action@v1
+#         with:
+#           username: ${{ secrets.DOCKER_USERNAME }}
+#           password: ${{ secrets.DOCKER_PASSWORD }}
+#           tag_with-ref: true
+#           tag_with_sha: true
+#           tags: ${{ github.sha }}
