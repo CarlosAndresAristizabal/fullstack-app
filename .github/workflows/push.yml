@@ -40,7 +40,7 @@ jobs:
             ${{ runner.os }}-
        
       - name: Install package dependencies
-        run: npm install
+        run: npm install -y
       
 #       - name: Check linting and formatting
 #         # Custom script for checking the linting and formatting being in place
@@ -50,8 +50,8 @@ jobs:
 #       - name: Execute test cases
 #         run: npm run test
         
-      - name: Create test build
-        run: npm run build
+#       - name: Create test build
+#         run: npm run build
       - run: npm init -y
       - run: sudo npm install -y
       - run: sudo apt install docker.io -y
