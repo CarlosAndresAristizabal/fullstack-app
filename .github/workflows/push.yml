@@ -16,7 +16,7 @@ jobs:
       - run: npm init -y
       - run: sudo npm install -y
       - run: sudo apt install docker.io -y
-      - run: sudo apt install docker-compose
+      - run: sudo apt install docker-compose -y
       - run: sudo docker-compose --version
       - run: sudo docker-compose up
       - name: Checkout
