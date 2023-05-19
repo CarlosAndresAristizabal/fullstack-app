@@ -15,7 +15,7 @@ jobs:
        
       with:
           run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: carlosandres22
           password: ${{ secrets.DOCKER_PASSWORD }}
           tag_with-ref: true
           tag_with_sha: true
