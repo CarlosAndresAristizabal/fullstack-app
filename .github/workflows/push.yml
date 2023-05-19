@@ -19,7 +19,7 @@ jobs:
       - run: npm init -y  
       - run: sudo npm install -y
       #- run: sudo npm start 
-      - run: sudo npm run build
+      - run: npm run build
       - name: Cache node modules
         uses: actions/cache@v3
         env:
