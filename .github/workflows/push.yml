@@ -15,7 +15,7 @@ jobs:
           node-version: 18.x
           check-latest: true
           cache: npm
-          cache-dependency-path: subdir/package-lock.json
+#           cache-dependency-path: subdir/package-lock.json
       - run: npm ci
       - run: npm test
       - run: sudo npm install -y
