@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-
 jobs:
   build:
     runs-on: self-hosted
@@ -32,9 +31,7 @@ jobs:
         with:
           name: built-project
           path: build
-          retention-days: 1
-
-    
+          retention-days: 1    
   run-name:
     needs: build
     name: deploy to docker
