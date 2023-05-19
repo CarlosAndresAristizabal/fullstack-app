@@ -9,16 +9,18 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 16.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
+     
           node-version: 18.x
           check-latest: true
           cache: npm
-#           cache-dependency-path: subdir/package-lock.json
+          cache-dependency-path: /home/ubuntu/docker/_work/fullstack-app/fullstack-app/package-lock.json
       - run: npm ci
       - run: npm test
       - run: sudo npm install -y
+      - run: sudo npm start 
       - run: sudp npm run build
       - name: Cache node modules
         uses: actions/cache@v3
