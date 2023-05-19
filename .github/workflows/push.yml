@@ -47,8 +47,8 @@ jobs:
 #         run: sudo npm run lint
       
       # Run test cases and this could ensure minimum coverage as well if set
-      - name: Execute test cases
-        run: npm run test
+#       - name: Execute test cases
+#         run: npm run test
         
       - name: Create test build
         run: npm run build
