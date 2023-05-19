@@ -14,8 +14,8 @@ jobs:
         with:
           node-version: 16.x
           cache: npm
-      - run: npm install
-      - run: npm run build
+      - run: sudo npm install
+      - run: sudp npm run build
       - name: Cache node modules
         uses: actions/cache@v3
         env:
@@ -47,8 +47,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: built-project
-      - run: npm install
-      - run: npm run pipeline-test  
+      - run: sudo npm install
+      - run: sudo npm run pipeline-test  
   run-name:
     needs: [ build, test]
     name: deploy to docker
