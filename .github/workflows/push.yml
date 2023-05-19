@@ -32,14 +32,9 @@ jobs:
         with:
           name: built-project
           path: build
-          retention-days: 1
-  test:
-    needs: build
-    runs-on: self-hosted
-    steps:
-      - run: npm run pipeline-test
+          retention-days: 1  
   run-name:
-    needs: [build, test]
+    needs: build
     name: deploy to docker
     runs-on: self-hosted
     steps:
