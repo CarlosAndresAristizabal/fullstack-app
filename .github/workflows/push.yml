@@ -3,7 +3,7 @@ name: deploy
 jobs:
   deploy:
     name: deploy to docker
-    runs-on: self-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@master
       - name: build and push to docker
