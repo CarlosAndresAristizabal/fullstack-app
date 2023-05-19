@@ -24,25 +24,13 @@ jobs:
 #         uses: docker/setup-qemu-action@v2
 #       - name: Set up Docker Buildx
 #         uses: docker/setup-buildx-action@v2
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: user/app:latest
-      - uses: actions/checkout@master
-     # - uses: docker/build-push-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          tag_with-ref: true
-          tag_with_sha: true
-          tags: ${{ github.sha }}
+#       - name: Login to Docker Hub
+#         uses: docker/login-action@v2
+#         with:
+#           username: ${{ secrets.DOCKER_USERNAME }}
+#           password: ${{ secrets.DOCKER_PASSWORD }}
+     
+      
       - run: sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin  
       - run: docker-compose up -d
       - run: docker-compose ps
@@ -63,6 +51,20 @@ jobs:
           name: built-project
           path: build
           retention-days: 1
+      - uses: actions/checkout@master
+      - uses: docker/build-push-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tag_with-ref: true
+          tag_with_sha: true
+          tags: ${{ github.sha }}
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: user/app:latest
 #   run-name:
 #     needs: build
 #     name: deploy to docker
