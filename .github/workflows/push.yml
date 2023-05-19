@@ -40,13 +40,7 @@ jobs:
   test:
     needs: build
     runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: npm
+    steps:           
       - name: Download build for testing
         uses: actions/download-artifact@v3
         with:
