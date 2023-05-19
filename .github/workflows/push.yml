@@ -1,7 +1,9 @@
-on: push
+on: 
+  push:
+    branches:  [ "master" ]
 name: deploy
 jobs:
-  deploy:
+  build:
     name: deploy to docker
     runs-on: self-hosted
     steps:
