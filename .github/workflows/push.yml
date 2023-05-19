@@ -12,11 +12,11 @@ jobs:
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
-     
-          node-version: 18.x
-          check-latest: true
-          cache: npm
+         node-version: 18.x
+         check-latest: true
+         cache: npm
           #cache-dependency-path: /home/ubuntu/docker/_work/fullstack-app/fullstack-app/package-lock.json
+      - run : npm init -y
       - run: npm ci
       - run: npm test
       - run: sudo npm install -y
