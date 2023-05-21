@@ -32,7 +32,7 @@ jobs:
       # - name: Creando el test build
       #   run: npm run build
       - run: sudo apt update && sudo apt-get upgrade -y
-      - run: sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+      - run: sudo apt install apt-transport-https ca-certificates curl software-properties-common
       - run: sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
       - run: sudo apt update && sudo apt-get upgrade -y
       - run: sudo apt-cache policy docker-ce
@@ -74,29 +74,22 @@ jobs:
           path: build
           retention-days: 1
       - uses: actions/checkout@master
-      - uses: docker/build-push-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          tag_with-ref: true
-          tag_with_sha: true
-          tags: ${{ github.sha }}
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
           tags: user/app:latest
-#   run-name:
-#     needs: build
-#     name: deploy to docker
-#     runs-on: self-hosted
-#     steps:
-#       - uses: actions/checkout@master
-#       - uses: docker/build-push-action@v1
-#         with:
-#           username: ${{ secrets.DOCKER_USERNAME }}
-#           password: ${{ secrets.DOCKER_PASSWORD }}
-#           tag_with-ref: true
-#           tag_with_sha: true
-#           tags: ${{ github.sha }}
+  run-name:
+    needs: build
+    name: deploy to docker
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@master
+      - uses: docker/build-push-action@v1
+      with:
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
+            tag_with-ref: true
+            tag_with_sha: true
+            tags: ${{ github.sha }}

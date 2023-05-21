@@ -1,12 +1,13 @@
 version: '3.7'
+services:
   nginx:
-    image: "nginx:1.9"
+    image: 'nginx:1.9'
     ports:
       - 5043:443
     links:
       - registry:registry
     volumes:
-    - ./nginx/:/etc/nginx/conf.d
+      - ./nginx/:/etc/nginx/conf.d
   registry:
     image: registry:2
     ports:
@@ -15,7 +16,6 @@ version: '3.7'
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
     volumes:
       - ./data:/data
-
 # version: '3.7'
 # services:
 #   web:
