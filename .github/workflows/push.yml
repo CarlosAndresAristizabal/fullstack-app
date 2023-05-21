@@ -80,16 +80,16 @@ jobs:
           context: .
           push: true
           tags: user/app:latest
-  run-name:
-    needs: build
-    name: deploy to docker
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@master
-      - uses: docker/build-push-action@v1
-      with:
-            username: ${{ secrets.DOCKER_USERNAME }}
-            password: ${{ secrets.DOCKER_PASSWORD }}
-            tag_with-ref: true
-            tag_with_sha: true
-            tags: ${{ github.sha }}
+run-name:
+  needs: build
+  name: deploy to docker
+  runs-on: self-hosted
+  steps:
+    - uses: actions/checkout@master
+    - uses: docker/build-push-action@v1
+    with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tag_with-ref: true
+          tag_with_sha: true
+          tags: ${{ github.sha }}
