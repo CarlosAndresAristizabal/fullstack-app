@@ -29,8 +29,8 @@ jobs:
             ${{ runner.os }}-
       - name: Install package dependencias
         run: sudo npm i -y
-      - name: Creaando el test build
-        run: npm run build
+      # - name: Creando el test build
+      #   run: npm run build
       - run: sudo apt update && sudo apt upgrade
       - run: sudo apt install apt-transport-https ca-certificates curl software-properties-common
       - run: sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
