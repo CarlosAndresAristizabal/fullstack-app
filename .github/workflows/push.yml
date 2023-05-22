@@ -9,7 +9,6 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 jobs:
-  
   build:
     runs-on: self-hosted
     permissions:
@@ -41,9 +40,16 @@ jobs:
             ${{ runner.os }}-
       - name: Install package dependencias
         run: sudo npm install -y
-      - uses: actions/checkout@v3  
+      - name: Instaclación de docker
+        run: sudo apt install ca-certificates curl gnupg lsb-release -y | sudo mkdir -p /etc/apt/keyrings
+      - name: validación
+        run: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg | sudo chmod a+r /etc/apt/keyrings/docker.gpg
+      - name: Añadir paquetes
+        run: echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
       - name: Construción de la imagen de docker
-        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s) | sudo apt update -y
+      - name: instalar paquete de servicios de docker
+        run: sudo apt install docker-ce docker-ce-cli containerd.io
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
@@ -84,7 +90,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
       # repository is public to avoid leaking data.  If you would like to publish
@@ -93,12 +98,10 @@ jobs:
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          COSIGN_EXPERIMENTAL: "true"
+          COSIGN_EXPERIMENTAL: 'true'
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
-     
-     
 # run-name:
 #   needs: build
 #   name: deploy to docker
