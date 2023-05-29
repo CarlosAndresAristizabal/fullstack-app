@@ -26,4 +26,4 @@ jobs:
         npm install -y
         npm run build --if-present
         npm run build
-        pm2 restart react-weather-app
+        pm2 restart fullstack-app
